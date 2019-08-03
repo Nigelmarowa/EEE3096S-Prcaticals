@@ -6,11 +6,11 @@ Readjust this Docstring as follows:
 Names: <Nigel Marowa>
 Student Number: <MRWNIG002>
 Prac: <Prac 1>
-Date: <31/07/2019>
+Date: <29/07/2019>
 """
 
 
-# import Librares
+# import Librares that are relevant
 import RPi.GPIO as GPIO
 from time import sleep
 from itertools import product
@@ -22,59 +22,54 @@ outputpin = [13, 31, 37]
 inputpin = [15, 29] 
 
 # outputs showing the list for the 3-bit counter
-
-listCounter =list(product([0,1], repeat=3))
+listCounter = list(product([0,1], repeat=3))
 
 
 #This is where the main function starts
 def main():
-    #This line shows a counter variable going to be used
-    counter = 0  
+    
+    #This line shows a count variable going to be used
+    count = 0  
     sleep(2)
     
     function0 = GPIO.gpio_function(29)
-    
     print(function0)
     
     function1 = GPIO.gpio_function(33)
-    
     print(function1)
     
     while True:
 
         if GPIO.event_detected(29): #incrementing the LEDs by one
-            
-        counter=counter + 1
+            count = count + 1
         
-        if counter ==8:
+        if count == 8:
             
-            counter=0
+            count = 0
 
-        print(counterList[counter])
+        print(counterList[count])
 
-        GPIO.output(outputpin, listCounter[counter])
+        GPIO.output(outputpin, listCounter[count])
         
         sleep(.2)
         
         if GPIO.event_detected(31):  #decrementing the LEDs by one
 
-            counter-=1
+            count-=1
 
-            if counter ==-1:
+            if count == -1:
                 
-                counter=7
+                count = 7
                 
-            print(listCounter[counter])
+            print(listCounter[count])
             
-            GPIO.output(outputpin, listCounter[counter])
-            
+            GPIO.output(outputpin, listCounter[count])
             sleep(.2)
         sleep(2) 
 
 if __name__ == "__main__":
     
     try:
-        
         GPIO.setmode(GPIO.BOARD)  #This line is initialising mode out of main loop
         GPIO.setup(outputpin, GPIO.OUT, initial=GPIO.LOW)
 
@@ -82,13 +77,12 @@ if __name__ == "__main__":
         GPIO.setup(inputpin, GPIO.IN)
         GPIO.setup(inputpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        #Here we are adding edge detection as well as debouncing
+        #The following lines we are adding edge detection as well as debouncing
         GPIO.add_event_detect(15, GPIO.RISING, bouncetime=300)
         GPIO.add_event_detect(29, GPIO.RISING, bouncetime=300)
 
         while True:
             main()
-            
     except KeyboardInterrupt:
         
         print("Exiting gracefully")
