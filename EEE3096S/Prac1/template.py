@@ -22,3 +22,16 @@ inputpin = [15, 29]
 
 # outputs showing the list for the 3-bit counter
 listCounter =list(product([0,1], repeat=3)) 
+#This is where the main function starts
+def main():
+    #This line shows a counter variable going to be used
+    counter = 0  
+    sleep(2)
+    
+    function0 = GPIO.gpio_function(29)
+    
+    print(function0)
+    
+    function1 = GPIO.gpio_function(33)
+    
+    print(function1)
