@@ -6,9 +6,10 @@ Readjust this Docstring as follows:
 Names: <Nigel Marowa>
 Student Number: <MRWNIG002>
 Prac: <Prac 1>
-Date: <29/07/2019>
+Date: <31/07/2019>
 """
-# import Relevant Librares
+
+
 # import Librares
 import RPi.GPIO as GPIO
 from time import sleep
@@ -67,4 +68,31 @@ def main():
             GPIO.output(outputpin, listCounter[counter])
             
             sleep(.2)
-        sleep(2)    
+        sleep(2) 
+
+if __name__ == "__main__":
+    
+    try:	
+        GPIO.setmode(GPIO.BOARD)  #This line is initialising mode out of main loop
+        GPIO.setup(outputpin, GPIO.OUT, initial=GPIO.LOW)
+
+        #The following line shows a list of GPIO set to input
+        GPIO.setup(inputpin, GPIO.IN)
+        GPIO.setup(inputpin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+        #Here we are adding edge detection as well as debouncing
+        GPIO.add_event_detect(15, GPIO.RISING, bouncetime=300)
+        GPIO.add_event_detect(29, GPIO.RISING, bouncetime=300)
+
+        while True:
+            main()
+            
+    except KeyboardInterrupt:
+        print("Exiting gracefully")
+        # The following line turns off the LEDs by cleaning up
+        GPIO.cleanup()
+        
+    except Exception as e:
+        GPIO.cleanup()
+        print("Some other error occurred")#printing error message
+        print(e.message)
