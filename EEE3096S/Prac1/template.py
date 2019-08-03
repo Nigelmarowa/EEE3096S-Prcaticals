@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 from itertools import product
 
-#LEDs pin out
+#LEDs pin out for board
 outputpin = [13, 31, 37] 
 
 #pin out for the button pins
