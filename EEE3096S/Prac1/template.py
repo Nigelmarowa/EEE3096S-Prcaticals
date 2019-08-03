@@ -25,6 +25,7 @@ inputpin = [15, 29]
 
 listCounter =list(product([0,1], repeat=3))
 
+
 #This is where the main function starts
 def main():
     #This line shows a counter variable going to be used
@@ -41,7 +42,7 @@ def main():
     
     while True:
 
-        if GPIO.event_detected(29): #incrementing the LEDs by 1
+        if GPIO.event_detected(29): #incrementing the LEDs by one
             
         counter=counter + 1
         
@@ -55,7 +56,7 @@ def main():
         
         sleep(.2)
         
-        if GPIO.event_detected(31):  #decrementing the LEDs by 1
+        if GPIO.event_detected(31):  #decrementing the LEDs by one
 
             counter-=1
 
@@ -72,7 +73,8 @@ def main():
 
 if __name__ == "__main__":
     
-    try:	
+    try:
+        
         GPIO.setmode(GPIO.BOARD)  #This line is initialising mode out of main loop
         GPIO.setup(outputpin, GPIO.OUT, initial=GPIO.LOW)
 
@@ -88,11 +90,15 @@ if __name__ == "__main__":
             main()
             
     except KeyboardInterrupt:
+        
         print("Exiting gracefully")
         # The following line turns off the LEDs by cleaning up
         GPIO.cleanup()
         
     except Exception as e:
+        
         GPIO.cleanup()
+        
         print("Some other error occurred")#printing error message
+        
         print(e.message)
