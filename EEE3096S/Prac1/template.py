@@ -8,11 +8,11 @@ Student Number: <MRWNIG002>
 Prac: <Prac 1>
 Date: <29/07/2019>
 """
-
-
 # import Librares that are relevant
 import RPi.GPIO as GPIO
+
 from time import sleep
+
 from itertools import product
 
 #LEDs pin out for board
@@ -22,7 +22,7 @@ outputpin = [13, 31, 37]
 inputpin = [15, 29] 
 
 # outputs showing the list for the 3-bit counter
-listCounter = list(product([0,1], repeat=3))
+listcount = list(product([0,1], repeat=3))
 
 
 #This is where the main function starts
@@ -49,11 +49,11 @@ def main():
 
         print(counterList[count])
 
-        GPIO.output(outputpin, listCounter[count])
+        GPIO.output(outputpin, listcount[count])
         
         sleep(.2)
         
-        if GPIO.event_detected(31):  #decrementing the LEDs by one
+        if GPIO.event_detected(31):  #decrementing the LEDs by one, opposing the previous command
 
             count-=1
 
@@ -61,10 +61,11 @@ def main():
                 
                 count = 7
                 
-            print(listCounter[count])
+            print(listcount[count])
             
-            GPIO.output(outputpin, listCounter[count])
+            GPIO.output(outputpin, listcount[count])
             sleep(.2)
+            
         sleep(2) 
 
 if __name__ == "__main__":
